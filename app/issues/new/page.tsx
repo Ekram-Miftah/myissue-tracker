@@ -1,5 +1,5 @@
 "use client";
-import dynamic from "next/dynamic"; // 💡 FIX 1: Import dynamic
+import dynamic from "next/dynamic";
 
 import "easymde/dist/easymde.min.css";
 import { useForm, Controller } from "react-hook-form";
@@ -13,14 +13,14 @@ import z from "zod";
 import ErrorMessage from "@/app/components/ErrorMessage";
 
 type IssueForm = z.infer<typeof crateIssueSchema>;
-// 💡 FIX 2: Dynamically import SimpleMDE and set ssr: false
+
 const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
   ssr: false,
   loading: () => (
     <textarea
       className="w-full p-2 border rounded-md"
       placeholder="Loading editor..."
-      rows={10}
+      rows={5}
     />
   ),
 });
@@ -35,9 +35,8 @@ const NewIssuePage = () => {
   } = useForm<IssueForm>({
     resolver: zodResolver(crateIssueSchema),
     defaultValues: {
-      // <--- ADD THIS
       title: "",
-      description: "", // <--- IMPORTANT FOR CONTROLLER
+      description: "",
     },
   });
   const [error, setError] = useState("");
