@@ -3,16 +3,15 @@ import { Card, Flex, Heading } from "@radix-ui/themes";
 import { notFound } from "next/navigation";
 import React from "react";
 import IssueStatusBadge from "@/app/components/IssueStatusBadge";
-import { number } from "zod";
+
 import { Text } from "@radix-ui/themes";
 import ReactMarkdow from "react-markdown";
+
 interface Props {
   params: { id: string };
 }
 
 const IssueDetailPage = async ({ params }: Props) => {
-  //   if (typeof params.id !== "number") notFound();
-
   const issue = await prisma.issue.findUnique({
     where: { id: parseInt(params.id) },
   });
@@ -27,7 +26,7 @@ const IssueDetailPage = async ({ params }: Props) => {
         <Text>{issue.createdAt.toDateString()}</Text>
       </Flex>
 
-      <Card className="prose" mt="4">
+      <Card className="prose prose-invert" mt="4">
         <ReactMarkdow>{issue.description}</ReactMarkdow>
       </Card>
     </div>

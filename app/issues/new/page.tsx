@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 
 import "easymde/dist/easymde.min.css";
 import { useForm, Controller } from "react-hook-form";
-import { Button, Callout, TextField, Text, Spinner } from "@radix-ui/themes";
+import { Button, Callout, TextField, Spinner } from "@radix-ui/themes";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -47,7 +47,7 @@ const NewIssuePage = () => {
       setSubmitting(true);
       await axios.post("/api/issues", data);
       router.push("/issues");
-    } catch (error) {
+    } catch (err) {
       setSubmitting(false);
       setError("Something went wrong!");
     }
