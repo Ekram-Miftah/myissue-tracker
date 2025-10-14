@@ -5,6 +5,7 @@ import React from "react";
 import IssueStatusBadge from "@/app/components/IssueStatusBadge";
 import { number } from "zod";
 import { Text } from "@radix-ui/themes";
+import ReactMarkdow from "react-markdown";
 interface Props {
   params: { id: string };
 }
@@ -26,8 +27,8 @@ const IssueDetailPage = async ({ params }: Props) => {
         <Text>{issue.createdAt.toDateString()}</Text>
       </Flex>
 
-      <Card>
-        <p>{issue.description}</p>
+      <Card className="prose" mt="4">
+        <ReactMarkdow>{issue.description}</ReactMarkdow>
       </Card>
     </div>
   );
