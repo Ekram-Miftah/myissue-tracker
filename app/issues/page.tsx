@@ -5,7 +5,7 @@ import prisma from "@/prisma/client";
 import IssueStatusBadge from "../components/IssueStatusBadge";
 
 const IssuesPage = async () => {
-  const issues = prisma.issue.findMany();
+  const issues = await prisma.issue.findMany();
   return (
     <div>
       <div className="mb-5">
@@ -26,19 +26,19 @@ const IssuesPage = async () => {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {(await issues).map((issuse) => (
-            <Table.Row key={issues.id}>
+          {(await issues).map((issue) => (
+            <Table.Row key={issue.id}>
               <Table.Cell>
-                {issues.title}
+                {issue.title}
                 <div className="block md:hidden">
-                  <IssueStatusBadge status={issues.status} />
+                  <IssueStatusBadge status={issue.status} />
                 </div>
               </Table.Cell>
               <Table.Cell className="hidden md:table-cell">
-                <IssueStatusBadge status={issues.status} />
+                <IssueStatusBadge status={issue.status} />
               </Table.Cell>
               <Table.Cell className="hidden md:table-cell">
-                {issues.createdAt.toDateString()}
+                {issue.createdAt.toDateString()}
               </Table.Cell>
             </Table.Row>
           ))}
