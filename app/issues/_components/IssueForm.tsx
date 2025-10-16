@@ -21,7 +21,7 @@ const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
     <textarea
       className="w-full p-2 border rounded-md"
       placeholder="Loading editor..."
-      rows={5}
+      rows={15}
     />
   ),
 });
