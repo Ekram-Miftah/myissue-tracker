@@ -1,30 +1,18 @@
 "use client";
-import dynamic from "next/dynamic";
-
-import "easymde/dist/easymde.min.css";
-import { useForm, Controller } from "react-hook-form";
-import { Button, Callout, TextField, Spinner } from "@radix-ui/themes";
+// import SimpleMDE from "react-simplemde-editor";
+import ErrorMessage from "@/app/components/ErrorMessage";
+import { IssueSchema } from "@/app/ValidationSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Issue } from "@prisma/client";
+import { Button, Callout, Spinner, TextField } from "@radix-ui/themes";
 import axios from "axios";
+import "easymde/dist/easymde.min.css";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { IssueSchema } from "@/app/ValidationSchema";
+import { Controller, useForm } from "react-hook-form";
+import SimpleMDE from "react-simplemde-editor";
 import z from "zod";
-import ErrorMessage from "@/app/components/ErrorMessage";
-import { Issue } from "@prisma/client";
-
 type IssueFormData = z.infer<typeof IssueSchema>;
-
-const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
-  ssr: false,
-  loading: () => (
-    <textarea
-      className="w-full p-2 border rounded-md"
-      placeholder="Loading editor..."
-      rows={15}
-    />
-  ),
-});
 
 const IssueForm = ({ issue }: { issue?: Issue }) => {
   const router = useRouter();
@@ -49,6 +37,7 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
       if (issue) await axios.patch("/api/issues/" + issue.id, data);
       else await axios.post("/api/issues", data);
       router.push("/issues");
+      router.refresh();
     } catch (err) {
       setSubmitting(false);
       setError("Something went wrong!");
