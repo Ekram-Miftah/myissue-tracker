@@ -7,7 +7,7 @@ interface Props {
 
 const Link = ({ href, children }: Props) => {
   return (
-    <NextLink href={href} passHref legacyBehavior>
+    <NextLink href={href} legacyBehavior>
       <RadixLink>{children}</RadixLink>
     </NextLink>
   );
