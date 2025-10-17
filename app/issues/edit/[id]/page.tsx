@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { Issue } from "@prisma/client";
 
 // Import the reusable wrapper component (which fixed the BUILD error)
-import IssueFormWrapper from "../../_components/IssueFormWrapper";
+import IssueFormWrapper from "@/app/issues/_components/IssueFormWrapper";
 
 interface Props {
   params: { id: string };
