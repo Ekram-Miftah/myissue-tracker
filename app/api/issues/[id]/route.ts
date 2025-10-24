@@ -1,17 +1,16 @@
+import authOptions from "@/app/auth/authOptions";
 import { IssueSchema } from "@/app/ValidationSchema";
 import prisma from "@/prisma/client";
+import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
-// Removed unused: import { error } from "console";
 
-/**
- * PATCH handler for updating an existing issue.
- * @param request - The NextRequest object containing the request body.
- * @param params - The dynamic route parameters ({ id: string }).
- */
 export async function PATCH(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const session = await getServerSession(authOptions);
+
+  if (!session) return NextResponse.json({}, { status: 401 });
   const body = await request.json();
   const validation = IssueSchema.safeParse(body);
 
@@ -46,16 +45,13 @@ export async function PATCH(
   return NextResponse.json(updatedIssue);
 }
 
-/**
- * DELETE handler for deleting an existing issue.
- * @param request - The NextRequest object.
- * @param params - The dynamic route parameters ({ id: string }).
- */
 export async function DELETE(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  // 1. Resolve parameters
+  const session = await getServerSession(authOptions);
+
+  if (!session) return NextResponse.json({}, { status: 401 });
   const resolvedParams = await params;
 
   // 2. Find the issue (CRITICAL FIX: Added 'await' to resolve the Promise)
