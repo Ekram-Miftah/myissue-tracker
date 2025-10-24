@@ -3,7 +3,7 @@ import prisma from "@/prisma/client";
 import { notFound } from "next/navigation";
 import { Issue } from "@prisma/client";
 
-// Import the reusable wrapper component (which fixed the BUILD error)
+// Assuming this path is correct for your project structure
 import IssueFormWrapper from "@/app/issues/_components/IssueFormWrapper";
 
 interface Props {
@@ -11,12 +11,12 @@ interface Props {
 }
 
 const EditIssuePage = async ({ params }: Props) => {
-  // FIX FOR THE RUNTIME ERROR: Await params before accessing its properties.
-  const resolvedParams = await params;
+  // CRITICAL FIX: The params object is available directly in a Server Component.
+  // We do NOT need (and should NOT use) 'await params'.
 
+  // Assuming your Issue ID is an integer in the database.
   const issue: Issue | null = await prisma.issue.findUnique({
-    // Use the resolved object here
-    where: { id: parseInt(resolvedParams.id) },
+    where: { id: parseInt(params.id) },
   });
 
   if (!issue) notFound();
